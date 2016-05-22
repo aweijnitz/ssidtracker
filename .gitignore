@@ -1,4 +1,7 @@
 plugins/
+platforms/android/
+platforms/browser/
+platforms/ios
 
 # Created by .ignore support plugin (hsz.mobi)
 ### Xcode template

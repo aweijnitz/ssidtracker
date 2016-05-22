@@ -45,6 +45,20 @@ var scanForNetworks = function scanForNetworks() {
   }, 500);
 };
 
+var backgroundScannerHandler = null;
+var startbackgroundScanner = function startbackgroundScanner(countdownDOMNode) {
+  var scanInterval = 10;
+  var intervalCount = scanInterval;
+  countdownDOMNode.max = scanInterval;
+  countdownDOMNode.value = scanInterval;
+  backgroundScannerHandler = setInterval(function countdown() {
+    if(intervalCount-- <= 0) {
+      scanForNetworks();
+      intervalCount = scanInterval;
+    }
+    countdownDOMNode.value = intervalCount; // update UI
+  }, 1000);
+};
 
 var app = {
   // Application Constructor
@@ -66,12 +80,14 @@ var app = {
     if (conf.useMocks)
       listHandler(mockNets);
     else {
-
+      // Trigger initial scan (about 3.5s delay)
       scanForNetworks();
+      startbackgroundScanner(document.getElementById('scancountdown'));
+
+      // Initialize the hidden network picker
       var node = document.getElementById('ssidPickerContainer');
       SSIDPicker.init(node);
-
-//SSIDPicker.onSelect(function onSSIDSelect(ssid) { targetNetwork = ssid; });
+      //SSIDPicker.onSelect(function onSSIDSelect(ssid) { targetNetwork = ssid; });
 
       document.getElementById('meterContainer').appendChild(toMeter(0, 10));
 
