@@ -1,5 +1,5 @@
 (function (document, $) {
-  var targetNetwork = 'MaStMuc'; //'WannabeAndroid';
+  var targetNetwork = 'WannabeAndroid';
   var currentNets = []; // Result from last scan
 
   // Get the name of the network we are tracking
@@ -80,8 +80,10 @@
     // The scope of 'this' is the event. In order to call the 'receivedEvent'
     // function, we must explicitly call 'app.receivedEvent(...);'
     onDeviceReady: function () {
-      if (conf.useMocks)
+      if (conf.useMocks) {
         listHandler(conf.mockNets);
+        currentNets = conf.mockNets;
+      }
       else {
         // Trigger initial scan (about 3.5s delay)
         scanForNetworks();
@@ -93,11 +95,13 @@
       SSIDPicker.init(node);
       //SSIDPicker.onSelect(function onSSIDSelect(ssid) { targetNetwork = ssid; });
       $('#saveSSIDButton').on('click', function() {
-        alert('Saved');
+        targetNetwork = $( 'input:checked' ).val();
+        setLevel(SSIDFinder.findSSID(targetNetwork, currentNets), conf.maxLevel);
         $('#ssidPicker').modal('hide');
       });
 
       $('#scancountdownContainer').on("click", function () {
+        SSIDPicker.populate(currentNets);
         $('#ssidPicker').modal('show');
       });
 

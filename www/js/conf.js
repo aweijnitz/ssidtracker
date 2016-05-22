@@ -1,6 +1,6 @@
 var conf = {
   maxLevel: 10,
-  useMocks: true,
+  useMocks: false,
   mockNets: [
     {
       "level": 4, // raw RSSI value
