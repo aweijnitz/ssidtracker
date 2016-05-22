@@ -45,11 +45,17 @@ body {
     width:100%;
 }
 
+.container {
+    height: 100%;
+    min-height: 100%;
+}
 /* Portrait layout (default) */
 .app {
     border: none;
     border-color: aliceblue;
     border-width: medium;
+
+    min-height: 80%;
 
     left:50%;
     top:50%;

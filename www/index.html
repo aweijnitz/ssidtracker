@@ -25,17 +25,20 @@
     <title>SSID Tracker</title>
 </head>
 <body>
-<div class="app">
-    <div id='meterContainer' class="meterContainer">
+<div class="container">
+    <div class="app">
+        <div id='meterContainer' class="meterContainer">
+        </div>
     </div>
-</div>
-<div class="controlPanel">
-    <div>Time to next scan</div>
-    <div>
-        <progress id="scancountdown" value="10" max="10"></progress>
+    <div class="controlPanel">
+        <div>Time to next scan</div>
+        <div>
+            <progress id="scancountdown" value="10" max="10"></progress>
+        </div>
     </div>
-</div>
-<div id='ssidPickerContainer'></div>
+    <div id='ssidPickerContainer'></div>
+</div><!-- end container -->
+
 <script type="text/javascript" src="cordova.js"></script>
 <script type="text/javascript" src="lib/jquery/jquery-2.2.4.min.js"></script>
 <script type="text/javascript" src="lib/bootstrap-3.3.6-dist/js/bootstrap.min.js"></script>
