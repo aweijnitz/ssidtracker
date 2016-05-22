@@ -1,0 +1,17 @@
+.meterContainer {
+    width: 100%;
+    height: 500px;
+}
+
+.meter {
+    width: 100%;
+    height: 100%;
+}
+
+.tick {
+    width: 100%;
+    height: 10%;
+    border-color: #333333;
+    border-bottom-style: groove;
+    border-width: thin;
+}
