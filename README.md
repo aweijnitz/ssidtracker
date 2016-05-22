@@ -7,7 +7,9 @@ The purpose of this project was for personal learning, more than anything else.
 
 ## Installing and running the app on a USB attached device
 
-```./runOnAndroidDevice.sh```
+Download all dependencies: ```cordova prepare``` 
+
+Run on attached device: ```./runOnAndroidDevice.sh```
 
 ## Debug app on device
 
