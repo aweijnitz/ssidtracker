@@ -45,6 +45,7 @@ var scanForNetworks = function scanForNetworks() {
   }, 500);
 };
 
+// Re-scan for networks periodically
 var backgroundScannerHandler = null;
 var startbackgroundScanner = function startbackgroundScanner(countdownDOMNode) {
   var scanInterval = 10;
