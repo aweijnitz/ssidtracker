@@ -1,5 +1,6 @@
-(function () {
+(function (document, $) {
   var targetNetwork = 'MaStMuc'; //'WannabeAndroid';
+  var currentNets = []; // Result from last scan
 
   // Get the name of the network we are tracking
   var getTargetNetworkName = function getTargetNetworkName() {
@@ -14,11 +15,11 @@
       document.getElementById('meterContainer').appendChild(toMeter(0, maxLevel));
   };
 
-  // Handler for available networks
+  // Handler for available networks. Used as callback to handle the scan results.
   //
   var listHandler = function listHandler(networks) {
+    currentNets = networks;
     setLevel(SSIDFinder.findSSID(getTargetNetworkName(), networks), conf.maxLevel);
-    console.log(networks);
   };
 
   //Retrieves list of available networks.
@@ -47,13 +48,13 @@
   };
 
   // Re-scan for networks periodically
-  var backgroundScannerHandler = null;
-  var startbackgroundScanner = function startbackgroundScanner(countdownDOMNode) {
+  var backgroundScannerId = null;
+  var startBackgroundScanner = function startBackgroundScanner(countdownDOMNode) {
     var scanInterval = 10;
     var intervalCount = scanInterval;
     countdownDOMNode.max = scanInterval;
     countdownDOMNode.value = scanInterval;
-    backgroundScannerHandler = setInterval(function countdown() {
+    backgroundScannerId = setInterval(function countdown() {
       if (intervalCount-- <= 0) {
         scanForNetworks();
         intervalCount = scanInterval;
@@ -80,21 +81,29 @@
     // function, we must explicitly call 'app.receivedEvent(...);'
     onDeviceReady: function () {
       if (conf.useMocks)
-        listHandler(mockNets);
+        listHandler(conf.mockNets);
       else {
         // Trigger initial scan (about 3.5s delay)
         scanForNetworks();
-        startbackgroundScanner(document.getElementById('scancountdown'));
-
-        // Initialize the hidden network picker
-        var node = document.getElementById('ssidPickerContainer');
-        SSIDPicker.init(node);
-        //SSIDPicker.onSelect(function onSSIDSelect(ssid) { targetNetwork = ssid; });
-
-        document.getElementById('meterContainer').appendChild(toMeter(0, 10));
+        startBackgroundScanner(document.getElementById('scancountdown'));
       }
+
+      // Initialize the hidden network picker
+      var node = document.getElementById('ssidList');
+      SSIDPicker.init(node);
+      //SSIDPicker.onSelect(function onSSIDSelect(ssid) { targetNetwork = ssid; });
+      $('#saveSSIDButton').on('click', function() {
+        alert('Saved');
+        $('#ssidPicker').modal('hide');
+      });
+
+      $('#scancountdownContainer').on("click", function () {
+        $('#ssidPicker').modal('show');
+      });
+
+      document.getElementById('meterContainer').appendChild(toMeter(0, 10));
     }
   };
 
   app.initialize();
-})();
+})(document, $);
